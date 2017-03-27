@@ -5,7 +5,7 @@ _jtools() {
 			sudo apt-get -y install apache2
 			sudo a2enmod vhost_alias
 			sudo a2enmod rewrite
-			sudo service apache2 reload
+			sudo service apache2 start
 			sudo update-rc.d apache2 defaults
 			sudo update-rc.d apache2 enable
 		;;
