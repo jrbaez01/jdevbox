@@ -1,0 +1,28 @@
+#!/bin/bash
+# sed -i 's/\r//' _jlamp.sh;
+
+# Private _jlamp.sh
+source "${0/bin\/jbox/''}/jtools/_jtools.sh"
+source "${0/bin\/jbox/''}/jlamp/_jlamp.sh"
+
+# Public jlamp command interface
+case "$1" in
+	#List patterns for the conditions you want to meet
+	'lamp')
+		_jlamp $2 $3
+	;;
+	'vhost')
+		echo "Setting vhost";
+		_jlamp $@
+	;;
+	'tools')
+		_jtools $2
+	;;
+	'init')
+		echo "Init site";
+	;;
+
+	*) echo "No valid $(whereis $0)command";;
+esac
+
+exit 0

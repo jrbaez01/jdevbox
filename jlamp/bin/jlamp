@@ -1,0 +1,34 @@
+#!/bin/bash
+# sed -i 's/\r//' _jlamp.sh;
+
+# Private _jlamp.sh
+source "_jlamp.sh"
+
+# Public wlsamp command interface
+case "$1" in
+	#List patterns for the conditions you want to meet
+	'install')
+		echo "Installing wlsamp"
+		_jlamp $@
+	;;
+	'up')
+		echo "Starting wlsamp $1 $2";
+		_jlamp $@
+	;;
+	'dowm') 
+		echo "Shuting down wlsamp";
+		_jlamp $@
+	;;
+	'vhost')
+		echo "Setting vhost";
+		_jlamp $@
+	;;
+	'init')
+		echo "Init site";
+		_jlamp $@
+	;;
+
+	*) echo "No valid $(whereis $0)command";;
+esac
+
+exit 0
