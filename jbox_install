@@ -1,0 +1,18 @@
+#!/bin/bash
+
+_jbox="$HOME/.jbox"
+
+if [ ! -f ${_jbox} ]; then
+sudo cat << EOF >> $HOME/.bashrc
+
+# jbox
+source $_jbox
+EOF
+fi
+
+sudo cat << EOF > $_jbox
+jbox_path=${PWD}/${0/jbox_install/''}
+export PATH=\${PATH}:\${jbox_path}/bin
+EOF
+
+echo "Instaling jbox..."

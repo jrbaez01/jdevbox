@@ -1,2 +1,4 @@
-Installing jbox to path
-PATH=${PATH}:$PWD/bin/
+# jbox
+
+In order to install jbox execute:
+```bash jbox_install```

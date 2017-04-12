@@ -2,8 +2,8 @@
 # sed -i 's/\r//' _jlamp.sh;
 
 # Private _jlamp.sh
-source "${0/bin\/jbox/''}/jtools/_jtools.sh"
-source "${0/bin\/jbox/''}/jlamp/_jlamp.sh"
+source "${0/bin\/jbox/''}jtools/_jtools.sh"
+source "${0/bin\/jbox/''}jlamp/_jlamp.sh"
 
 # Public jlamp command interface
 case "$1" in
@@ -12,7 +12,6 @@ case "$1" in
 		_jlamp $2 $3
 	;;
 	'vhost')
-		echo "Setting vhost";
 		_jlamp $@
 	;;
 	'tools')

@@ -2,9 +2,9 @@
 # source "$PWD/jtools/_jtools.sh"
 
 _SUFFIX="jbox"
-_APACHE_VHOSTS="/etc/apache2/sites-available/vhostname.${_SUFFIX}.conf"
 _APACHE_CONFIG="/etc/apache2/apache2.conf"
-_PUBLIC_DIR="/mnt/c/Users/Public"
+_APACHE_VHOSTS="/etc/apache2/sites-available/VHOSTNAME.${_SUFFIX}.conf"
+_WINDOW_DIR="/mnt/c/Users/Public/${_SUFFIX}/"
 _WINDOW_HOSTS="/mnt/c/Windows/System32/drivers/etc/hosts"
 
 _jlamp() {
@@ -22,18 +22,18 @@ _jlamp() {
 			echo "Shuting down wlsamp"
 		;;
 		'vhost')
-			echo "Setting vhost"
-			if [ ! -f "${_APACHE_VHOSTS/vhostname/$2}" ]; then
-				mkdir "${_PUBLIC_DIR}/$2"
-				sudo touch "${_APACHE_VHOSTS/vhostname/$2}"
-				sudo cat << EOF > "${_APACHE_VHOSTS/vhostname/$2}"
+			echo "Setting vhost..."
+			if [ ! -f "${_APACHE_VHOSTS/VHOSTNAME/$2}" ]; then
+				mkdir -p "${_WINDOW_DIR}$2"
+				touch "${_APACHE_VHOSTS/VHOSTNAME/$2}"
+				sudo cat << EOF > "${_APACHE_VHOSTS/VHOSTNAME/$2}"
 <VirtualHost *:80>
 	ServerName "${2}.${_SUFFIX}"
 	ServerAlias "*.${2}.${_SUFFIX}"
-	VirtualDocumentRoot ${_PUBLIC_DIR}/%2/%1/web
+	VirtualDocumentRoot ${_WINDOW_DIR}%2/%1/web
 	DirectoryIndex index.html index.php
 	SetEnv APP_ENV "dev"
-	<Directory ${_PUBLIC_DIR}/%2/%1/web>
+	<Directory ${_WINDOW_DIR}%2/%1/web>
 		Options Indexes FollowSymLinks
 		AllowOverride All
 		Order allow,deny
@@ -43,14 +43,15 @@ _jlamp() {
 EOF
 
 		sudo cat << EOF >> "${_APACHE_CONFIG}"
-<Directory ${_PUBLIC_DIR}>
+
+<Directory ${_WINDOW_DIR}>
         Options Indexes FollowSymLinks
-        AllowOverride None
+        AllowOverride All
         Require all granted
 </Directory>
 EOF
 		sudo cat << EOF >> "${_WINDOW_HOSTS}"
-127.0.0.1	$2.jbox
+127.0.0.1	$2.${_SUFFIX}
 EOF
 				sudo a2ensite "${2}.${_SUFFIX}"
 				sudo service apache2 reload
